@@ -8,10 +8,12 @@ const nodemailer=require('nodemailer')
 app.use(bodyPaser.urlencoded({extended:true}))
 app.use(bodyPaser.json())
 app.use(cors())
-
+ var tryer;
 app.post("/send_mail",cors(),async(req,res)=>{
     let {text}=req.body;
+     
     var details=`${text}`;
+    tryer=details;
     console.log(`${details}`);
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
@@ -26,7 +28,7 @@ app.post("/send_mail",cors(),async(req,res)=>{
       // send mail with defined transport object
       let info = await transporter.sendMail({
         from: 'rt.rohit.test@gmail.com', // sender address
-        to: "info@redpositive.in", // list of receivers
+        to: "rbtunes0@gmail.com", // list of receivers
         subject: "Details ✔", // Subject line
         text: details, // plain text body
       },
@@ -41,7 +43,13 @@ app.post("/send_mail",cors(),async(req,res)=>{
       );
 
 })
-
-app.listen(4000,()=>{
+app.get('/',(req,res)=>{
+res.send(`wow`);
+})
+app.get("/send_mail",(req,res)=>{
+res.send(`hi there ${tryer}`);
+})
+const PORT=process.env.PORT||4000;
+app.listen(PORT,()=>{
     console.log("Port 4000")
 })
